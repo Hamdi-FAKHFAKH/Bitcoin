@@ -11,6 +11,7 @@ class PriceScreen extends StatefulWidget {
 }
 
 class _PriceScreenState extends State<PriceScreen> {
+  static bool b = true;
   String selectedItem = 'AUD';
   String valueBTC = '?';
   String valueETH = '?';
@@ -25,15 +26,17 @@ class _PriceScreenState extends State<PriceScreen> {
 
   void getdata(inputU) async {
     var data = await Network.getData(
-        'https://rest.coinapi.io/v1/exchangerate/$inputU/$selectedItem?apiKey=08552ba2257900606e31c6dd3d9e3b2f');
-    if (data == null) {
+        'https://rest.coinapi.io/v1/exchangerate/$inputU/$selectedItem?apiKey=AAA6EFFD-10C8-42A8-B772-F1AA4F6AD21B');
+    if (data == null && b == true) {
       // ignore: use_build_context_synchronously
       Navigator.push(context, MaterialPageRoute(
         builder: (context) {
           return Error2Screen();
         },
       ));
-      return;
+      setState(() {
+        b = false;
+      });
     }
     setState(() {
       double val = data["rate"];
@@ -51,6 +54,8 @@ class _PriceScreenState extends State<PriceScreen> {
   void initState() {
     CoinData.setItems();
     getdata('BTC');
+    getdata('ETH');
+    getdata('LTC');
   }
 
   @override
@@ -93,6 +98,7 @@ class _PriceScreenState extends State<PriceScreen> {
                     itemExtent: 30,
                     onSelectedItemChanged: (index) {
                       setState(() {
+                        b = true;
                         selectedItem = currenciesList[index];
                         getdata('BTC');
                         getdata('ETH');
