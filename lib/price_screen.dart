@@ -11,7 +11,7 @@ class PriceScreen extends StatefulWidget {
 }
 
 class _PriceScreenState extends State<PriceScreen> {
-  static bool b = true;
+  bool b = true;
   String selectedItem = 'AUD';
   String valueBTC = '?';
   String valueETH = '?';
